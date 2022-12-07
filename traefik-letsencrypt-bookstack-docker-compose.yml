@@ -1,0 +1,119 @@
+version: "3.8"
+
+services:
+  traefik:
+    image: traefik:v3.0@sha256:e27e08111cced4a2505f7e86c9987cdc88e841e00cc04d628c5d9e1dcd75577c
+    command:
+      - "--log.level=WARN"
+      - "--accesslog=true"
+      - "--api.dashboard=true"
+      - "--api.insecure=true"
+      - "--ping=true"
+      - "--ping.entrypoint=ping"
+      - "--entryPoints.ping.address=:8082"
+      - "--entryPoints.web.address=:80"
+      - "--entryPoints.websecure.address=:443"
+      - "--providers.docker=true"
+      - "--providers.docker.endpoint=unix:///var/run/docker.sock"
+      - "--providers.docker.exposedByDefault=false"
+      - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
+      # Email for Let's Encrypt (replace with yours)
+      - "--certificatesresolvers.letsencrypt.acme.email=example.mail@mail.com"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/etc/traefik/acme/acme.json"
+      - "--metrics.prometheus=true"
+      # You can remove this line if you don't want to use Prometheus
+      - "--metrics.prometheus.buckets=0.1,0.3,1.2,5.0"
+      - "--global.checkNewVersion=true"
+      - "--global.sendAnonymousUsage=false"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - traefik-certificates:/etc/traefik/acme
+    ports:
+      - "80:80"
+      - "443:443"
+    healthcheck:
+      test: ["CMD", "wget", "http://localhost:8082/ping","--spider"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    labels:
+      - "traefik.enable=true"
+      # Traefik URL (replace with yours)
+      - "traefik.http.routers.dashboard.rule=Host(`example.url.com`)"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.services.dashboard.loadbalancer.server.port=8080"
+      - "traefik.http.routers.dashboard.tls=true"
+      - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt"
+      - "traefik.http.services.dashboard.loadbalancer.passhostheader=true"
+      - "traefik.http.routers.dashboard.middlewares=authtraefik"
+      # Basic Authentication for Traefik Dashboard
+      # Username: admin (replace with yours)
+      # Passwords must be encoded using MD5, SHA1, or BCrypt
+      - "traefik.http.middlewares.authtraefik.basicauth.users=admin:$2y$10$tzGrxnBWcBBCKpFWdvzJDOt/Y4ihpuxXuE9r7mP/eo1MRBGcmV9q2"
+      - "traefik.http.routers.http-catchall.rule=HostRegexp(`{host:.+}`)"
+      - "traefik.http.routers.http-catchall.entrypoints=web"
+      - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+    restart: unless-stopped
+
+  bookstack_web:
+    image: lscr.io/linuxserver/bookstack:22.11.20221130@sha256:c408ce8f4b484633a889ee1c2839fad80df802ecd163de0d818d474b70f558bd
+    container_name: bookstack_web
+    networks:
+      - default
+      - web
+    environment:
+      - PUID=33
+      - PGID=33
+      - APP_URL=example.url.com
+      - DB_HOST=bookstack_db
+      - DB_USERNAME=bookstack
+      - DB_PASSWORD=MODIFY_ME
+      - DB_DATABASE=bookstackapp
+      - ALLOW_ROBOTS=false
+      - LOG_FAILED_LOGIN_MESSAGE="Failed login for %u"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bookstack.entrypoints=websecure"
+      - "traefik.http.routers.bookstack.rule=Host(`example.url.com`)"
+      - "traefik.http.routers.bookstack.tls=true"
+      - "traefik.http.routers.bookstack.tls.certresolver=default"
+      - "traefik.http.services.bookstack.loadbalancer.server.port=80"
+      - "traefik.docker.network=traefik_web"
+    volumes:
+      - /data/bookstack/data:/config
+    healthcheck:
+      test: curl --fail http://localhost || exit 1
+      interval: 60s
+      retries: 5
+      start_period: 20s
+      timeout: 5s
+    restart: unless-stopped
+    depends_on:
+      bookstack_db:
+        condition: service_healthy
+
+  bookstack_db:
+    image: lscr.io/linuxserver/mariadb:10.5.17-r0-ls70@sha256:074604713d092191685a6e56ab30199474accaa1b8ad008f866517637cf9664d
+    container_name: bookstack_db
+    environment:
+      - PUID=33
+      - PGID=33
+      - MYSQL_ROOT_PASSWORD=MODIFY_ME
+      - TZ=Europe/Berlin
+      - MYSQL_DATABASE=bookstackapp
+      - MYSQL_USER=bookstack
+      - MYSQL_PASSWORD=MODIFY_ME
+    volumes:
+      - /data/bookstack/database:/config
+    restart: unless-stopped
+    healthcheck:
+      test: "/usr/bin/mariadb --user=root --password=MODIFY_ME --execute \"SHOW DATABASES;\""
+      interval: 3s
+      retries: 5
+      start_period: 20s
+      timeout: 1s
+    networks:
+      - default
