@@ -17,12 +17,9 @@ services:
       - "--providers.docker.endpoint=unix:///var/run/docker.sock"
       - "--providers.docker.exposedByDefault=false"
       - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
-      # Email for Let's Encrypt (replace with yours)
+      # Email for Let's Encrypt (replace with your own e-mail)
       - "--certificatesresolvers.letsencrypt.acme.email=example.mail@mail.com"
       - "--certificatesresolvers.letsencrypt.acme.storage=/etc/traefik/acme/acme.json"
-      - "--metrics.prometheus=true"
-      # You can remove this line if you don't want to use Prometheus
-      - "--metrics.prometheus.buckets=0.1,0.3,1.2,5.0"
       - "--global.checkNewVersion=true"
       - "--global.sendAnonymousUsage=false"
     volumes:
@@ -39,7 +36,7 @@ services:
       start_period: 5s
     labels:
       - "traefik.enable=true"
-      # Traefik URL (replace with yours)
+      # Traefik URL (replace this with your own URL)
       - "traefik.http.routers.dashboard.rule=Host(`example.url.com`)"
       - "traefik.http.routers.dashboard.service=api@internal"
       - "traefik.http.routers.dashboard.entrypoints=websecure"
@@ -49,7 +46,7 @@ services:
       - "traefik.http.services.dashboard.loadbalancer.passhostheader=true"
       - "traefik.http.routers.dashboard.middlewares=authtraefik"
       # Basic Authentication for Traefik Dashboard
-      # Username: admin (replace with yours)
+      # Username: admin (replace with your own username and encrypted password)
       # Passwords must be encoded using MD5, SHA1, or BCrypt
       - "traefik.http.middlewares.authtraefik.basicauth.users=admin:$$2y$$10$$tzGrxnBWcBBCKpFWdvzJDOt/Y4ihpuxXuE9r7mP/eo1MRBGcmV9q2"
       - "traefik.http.routers.http-catchall.rule=HostRegexp(`{host:.+}`)"
@@ -80,7 +77,6 @@ services:
       - "traefik.http.routers.bookstack.tls=true"
       - "traefik.http.routers.bookstack.tls.certresolver=default"
       - "traefik.http.services.bookstack.loadbalancer.server.port=80"
-#      - "traefik.docker.network=traefik_web"
     volumes:
       - /data/bookstack/data:/config
     healthcheck:
