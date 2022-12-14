@@ -27,7 +27,7 @@ services:
       - "--global.sendAnonymousUsage=false"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - traefik-certificates:/etc/traefik/acme
+      - /data/traefik/ssl:/etc/traefik/acme
     ports:
       - "80:80"
       - "443:443"
@@ -51,7 +51,7 @@ services:
       # Basic Authentication for Traefik Dashboard
       # Username: admin (replace with yours)
       # Passwords must be encoded using MD5, SHA1, or BCrypt
-      - "traefik.http.middlewares.authtraefik.basicauth.users=admin:$2y$10$tzGrxnBWcBBCKpFWdvzJDOt/Y4ihpuxXuE9r7mP/eo1MRBGcmV9q2"
+      - "traefik.http.middlewares.authtraefik.basicauth.users=admin:$$2y$$10$$tzGrxnBWcBBCKpFWdvzJDOt/Y4ihpuxXuE9r7mP/eo1MRBGcmV9q2"
       - "traefik.http.routers.http-catchall.rule=HostRegexp(`{host:.+}`)"
       - "traefik.http.routers.http-catchall.entrypoints=web"
       - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
@@ -63,7 +63,6 @@ services:
     container_name: bookstack_web
     networks:
       - default
-      - web
     environment:
       - PUID=33
       - PGID=33
@@ -81,7 +80,7 @@ services:
       - "traefik.http.routers.bookstack.tls=true"
       - "traefik.http.routers.bookstack.tls.certresolver=default"
       - "traefik.http.services.bookstack.loadbalancer.server.port=80"
-      - "traefik.docker.network=traefik_web"
+#      - "traefik.docker.network=traefik_web"
     volumes:
       - /data/bookstack/data:/config
     healthcheck:
