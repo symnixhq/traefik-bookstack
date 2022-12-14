@@ -37,10 +37,11 @@ Note: after you've decrypted your password you need to escape every "$" sign wit
 
 In our example we use:
 
-  ```yaml
-  volumes:
-    - /data/bookstack/database:/config
-  ```
+```yaml
+volumes:
+  - /data/bookstack/database:/config
+```
+
 as the volume that we mount into the container. If you want to use the exact same volumes, you need to create them on your system before. You can do this like this for example:
 
 ```bash
@@ -67,7 +68,7 @@ sudo mkdir -p /data/bookstack/database
 
 8. Enjoy your new Bookstack installation!
 
-    Note: If you have questions regarding bookstack, have a look at https://www.bookstackapp.com/docs/.
+   Note: If you have questions regarding bookstack, have a look at https://www.bookstackapp.com/docs/.
 
 <br>
 
