@@ -47,7 +47,7 @@ services:
       - "traefik.http.routers.dashboard.middlewares=authtraefik"
       # Basic Authentication for Traefik Dashboard
       # Username: admin (replace with your own username and encrypted password)
-      # Passwords must be encoded using MD5, SHA1, or BCrypt
+      # Passwords must be encoded using MD5, SHA1, or BCrypt (check README.md on how to hash a password)
       - "traefik.http.middlewares.authtraefik.basicauth.users=admin:$$2y$$10$$tzGrxnBWcBBCKpFWdvzJDOt/Y4ihpuxXuE9r7mP/eo1MRBGcmV9q2"
       - "traefik.http.routers.http-catchall.rule=HostRegexp(`{host:.+}`)"
       - "traefik.http.routers.http-catchall.entrypoints=web"
