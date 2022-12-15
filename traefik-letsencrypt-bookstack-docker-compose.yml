@@ -18,7 +18,7 @@ services:
       - "--providers.docker.exposedByDefault=false"
       - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
       # Email for Let's Encrypt (replace with your own e-mail)
-      - "--certificatesresolvers.letsencrypt.acme.email=example.mail@mail.com"
+      - "--certificatesresolvers.letsencrypt.acme.email=example.mail@examplemailservice.com"
       - "--certificatesresolvers.letsencrypt.acme.storage=/etc/traefik/acme/acme.json"
       - "--global.checkNewVersion=true"
       - "--global.sendAnonymousUsage=false"

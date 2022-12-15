@@ -25,7 +25,7 @@
 
 4. Adjust the variables for your configuration. Edit the following values:
    1. Passwords (declared as "MODIFY_ME")
-   2. E-Mail address (declared as "example.mail@mail.com")
+   2. E-Mail address (declared as "example.mail@examplemailservice.com")
    3. Domain (declared as "example.url.com")
    4. Encrypted basic auth string for your Traefik dashboard (declared as "admin:$$2y$$10$$tzGrxnBWcBBCKpFWdvzJDOt/Y4ihpuxXuE9r7mP/eo1MRBGcmV9q2")
 
