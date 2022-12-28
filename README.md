@@ -27,7 +27,9 @@
    1. Passwords (declared as "MODIFY_ME")
    2. E-Mail address (declared as "example.mail@examplemailservice.com")
    3. Domain (declared as "example.url.com")
-   4. Encrypted basic auth string for your Traefik dashboard (declared as "admin:$$2y$$10$$tzGrxnBWcBBCKpFWdvzJDOt/Y4ihpuxXuE9r7mP/eo1MRBGcmV9q2")
+
+   Edit and Encode the password you want to use in the .env file
+   1. It is declared as "${basicauth_password}" but needs to be changed in the .env file
 
 Note: You can hash your password with the following line, assuming you installed `htpasswd`before.
 
@@ -35,6 +37,14 @@ Note: You can hash your password with the following line, assuming you installed
 echo $(htpasswd -nb user password) | sed -e s/\\$/\\$\\$/g
 ```
 After you've decrypted your password you need to escape every "$" sign with another "$".
+
+Tip: You can use:
+
+```bash
+docker-compose convert
+```
+to resolve your configuration file into the terminal.
+
 
 <br>
 
