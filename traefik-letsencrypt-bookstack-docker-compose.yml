@@ -50,6 +50,7 @@ services:
       # Basic Authentication for Traefik Dashboard
       # Username: admin (replace with your own username and encrypted password)
       # Passwords must be encoded using MD5, SHA1, or BCrypt (check README.md on how to hash a password)
+      # We recommend BCrypt here to encode your password for basic auth
       # Please change the password in the .env file
       - "traefik.http.middlewares.authtraefik.basicauth.users=${BASICAUTH_USER}:${BASICAUTH_PASSWORD}"
       - "traefik.http.routers.http-catchall.rule=HostRegexp(`{host:.+}`)"
