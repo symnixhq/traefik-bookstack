@@ -29,7 +29,7 @@
    3. Domain (declared as "example.url.com")
 
    Edit and Encode the password you want to use in the .env file
-   1. It is declared as "${basicauth_password}" but needs to be changed in the .env file
+   1. It is declared as "${BASICAUTH_PASSWORD}" but needs to be changed in the .env file
 
 Note: You can hash your password with the following line, assuming you installed `htpasswd`before.
 

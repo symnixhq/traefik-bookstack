@@ -51,7 +51,7 @@ services:
       # Username: admin (replace with your own username and encrypted password)
       # Passwords must be encoded using MD5, SHA1, or BCrypt (check README.md on how to hash a password)
       # Please change the password in the .env file
-      - "traefik.http.middlewares.authtraefik.basicauth.users=${basicauth_user}:${basicauth_password}"
+      - "traefik.http.middlewares.authtraefik.basicauth.users=${BASICAUTH_USER}:${BASICAUTH_PASSWORD}"
       - "traefik.http.routers.http-catchall.rule=HostRegexp(`{host:.+}`)"
       - "traefik.http.routers.http-catchall.entrypoints=web"
       - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
