@@ -73,7 +73,7 @@ sudo mkdir -p /data/bookstack/database
 
 <br>
 
-7. Check the application logs and verify that everything is running appropriate
+7. Check the application logs and verify that everything is running appropriatly
 
    ```bash
    sudo docker-compose logs -f
