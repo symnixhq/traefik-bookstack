@@ -1,0 +1,18 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": [
+		"config:base"
+	],
+	"schedule": "every weekday",
+	"timezone": "Europe/Berlin",
+	"ignoreUnstable": true,
+	"stabilityDays": 7,
+	"docker": {
+		"pinDigests": true
+	},
+	"docker-compose": {
+		"fileMatch": [
+			"traefik-letsencrypt-bookstack-docker-compose.yml"
+		]
+	}
+}
