@@ -6,8 +6,8 @@
 
 ## ⚡️ Installation
 
-1. Make sure you've installed Docker including `docker-compose` support on your target system.
-   You can install `docker-compose` following this instruction: https://docs.docker.com/compose/install/
+1. Make sure you've installed Docker including `docker compose` support on your target system.
+   You can install `docker compose` following this instruction: https://docs.docker.com/compose/install/
 
 <br>
 
@@ -19,7 +19,7 @@
 
 <br>
 
-3. Open the file called `traefik-letsencrypt-bookstack-docker-compose.yml`
+3. Open the file called `traefik-letsencrypt-bookstack-docker compose.yml`
 
 <br>
 
@@ -41,7 +41,7 @@ After you've decrypted your password you need to escape every "$" sign with anot
 Tip: You can use:
 
 ```bash
-docker-compose convert
+docker compose convert
 ```
 to resolve your configuration file into the terminal.
 
@@ -68,7 +68,7 @@ sudo mkdir -p /data/bookstack/database
 6. Start the project
 
    ```bash
-   sudo docker-compose up -d
+   sudo docker compose up -d
    ```
 
 <br>
@@ -76,7 +76,7 @@ sudo mkdir -p /data/bookstack/database
 7. Check the application logs and verify that everything is running appropriatly
 
    ```bash
-   sudo docker-compose logs -f
+   sudo docker compose logs -f
    ```
 
 <br>
