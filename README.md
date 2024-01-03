@@ -27,9 +27,10 @@
    1. Passwords (declared as "MODIFY_ME")
    2. E-Mail address (declared as "example.mail@examplemailservice.com")
    3. Domain (declared as "example.url.com")
+   4. PGID and PUID of the user who owns the database data directory
 
    Edit and Encode the password you want to use in the .env file
-   1. It is declared as "${BASICAUTH_PASSWORD}" but needs to be changed in the .env file
+   5. It is declared as "${BASICAUTH_PASSWORD}" but needs to be changed in the .env file
 
 Note: You can hash your password with the following line, assuming you installed `htpasswd`before.
 

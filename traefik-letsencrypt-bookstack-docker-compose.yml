@@ -98,8 +98,8 @@ services:
     image: lscr.io/linuxserver/mariadb:10.5.17-r0-ls70@sha256:074604713d092191685a6e56ab30199474accaa1b8ad008f866517637cf9664d
     container_name: bookstack_db
     environment:
-      - PUID=33
-      - PGID=33
+      - PUID=MODIFY_ME
+      - PGID=MODIFY_ME
       - MYSQL_ROOT_PASSWORD=MODIFY_ME
       - TZ=Europe/Berlin
       - MYSQL_DATABASE=bookstackapp
