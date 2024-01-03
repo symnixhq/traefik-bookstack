@@ -67,7 +67,7 @@ services:
     environment:
       - PUID=33
       - PGID=33
-      - APP_URL=example.url.com
+      - APP_URL=https://example.url.com
       - DB_HOST=bookstack_db
       - DB_USERNAME=bookstack
       - DB_PASSWORD=MODIFY_ME
