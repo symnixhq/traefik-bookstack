@@ -67,7 +67,7 @@ services:
     environment:
       - PUID=33
       - PGID=33
-      - APP_URL=example.url.com
+      - APP_URL=https://example.url.com
       - DB_HOST=bookstack_db
       - DB_USERNAME=bookstack
       - DB_PASSWORD=MODIFY_ME
@@ -79,7 +79,7 @@ services:
       - "traefik.http.routers.bookstack.entrypoints=websecure"
       - "traefik.http.routers.bookstack.rule=Host(`example.url.com`)"
       - "traefik.http.routers.bookstack.tls=true"
-      - "traefik.http.routers.bookstack.tls.certresolver=default"
+      - "traefik.http.routers.bookstack.tls.certresolver=letsencrypt"
       - "traefik.http.services.bookstack.loadbalancer.server.port=80"
     volumes:
       - /data/bookstack/data:/config
@@ -98,8 +98,8 @@ services:
     image: lscr.io/linuxserver/mariadb:10.5.17-r0-ls70@sha256:074604713d092191685a6e56ab30199474accaa1b8ad008f866517637cf9664d
     container_name: bookstack_db
     environment:
-      - PUID=33
-      - PGID=33
+      - PUID=MODIFY_ME
+      - PGID=MODIFY_ME
       - MYSQL_ROOT_PASSWORD=MODIFY_ME
       - TZ=Europe/Berlin
       - MYSQL_DATABASE=bookstackapp
