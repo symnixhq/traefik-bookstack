@@ -69,7 +69,7 @@ sudo mkdir -p /data/bookstack/database
 6. Start the project
 
    ```bash
-   sudo docker compose up -d
+   sudo docker compose -f <name_of_the_docker_file> up -d
    ```
 
 <br>
