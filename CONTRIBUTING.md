@@ -84,7 +84,7 @@ $ git commit -m "improved feature X for traefik-bookstack"
 Use the `git push` command to add your local made changes to your remote fork
 
 ```
-$ git push origin master
+$ git push origin main
 ```
 
 ### Open a Pull Request
