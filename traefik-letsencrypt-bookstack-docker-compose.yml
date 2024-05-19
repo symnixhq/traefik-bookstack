@@ -60,7 +60,7 @@ services:
     restart: unless-stopped
 
   bookstack_web:
-    image: lscr.io/linuxserver/bookstack:24.05.20240511@sha256:58bb731182f937f85563c79f70d9cd5ec0e14ee4cb77a52bf540f77ccc7b8040
+    image: lscr.io/linuxserver/bookstack:24.05.20240513@sha256:47ea8c0970d32e3c1f9c9931990ff6cec9996bfe3e4bd0c35eb3ae6acb59cfdb
     container_name: bookstack_web
     networks:
       - default
