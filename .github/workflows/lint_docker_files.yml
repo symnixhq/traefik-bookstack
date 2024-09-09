@@ -1,0 +1,41 @@
+name: Lint Docker Compose
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '**/traefik-letsencrypt-bookstack-docker-compose.yml'
+      - '**/env'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # Fetch enough history to ensure comparisons work
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
+
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install docker-compose -y
+
+      - name: Verify .env files
+        run: |
+          find . -name ".env" -print
+
+      - name: Find and lint Docker Compose files
+        run: |
+          find . -name "traefik-letsencrypt-bookstack-docker-compose.yml" | while read file; do
+            env_file=$(dirname "$file")/.env
+            if [ -f "$env_file" ]; then
+              echo "Using .env file at: $env_file"
+              docker-compose --env-file "$env_file" -f "$file" config -q
+            else
+              echo "Warning: .env file not found at: $env_file"
+            fi
+          done
