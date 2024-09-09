@@ -3,7 +3,16 @@
 	"extends": [
 		"config:base"
 	],
-	"schedule": "every weekday",
+	"automerge": true,
+	"automergeType": "pr",
+	"automergeStrategy": "merge-commit",
+	"branchConcurrentLimit": 1,
+	"prConcurrentLimit": 1,
+	"schedule": [
+		"after 10pm every weekday",
+		"before 5am every weekday",
+		"every weekend"
+	],
 	"timezone": "Europe/Berlin",
 	"ignoreUnstable": true,
 	"stabilityDays": 7,
@@ -14,5 +23,16 @@
 		"fileMatch": [
 			"traefik-letsencrypt-bookstack-docker-compose.yml"
 		]
-	}
+	},
+	"packageRules": [
+		{
+			"matchUpdateTypes": [
+				"patch",
+				"minor",
+				"pin",
+				"digest",
+				"pinDigest"
+			]
+		}
+	]
 }
