@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   traefik:
-    image: traefik:v3.2@sha256:66e37237b371f2b25ce5f247cc371976929dcb18c041e05685f1de1df6422b72
+    image: traefik:v3.2@sha256:608322f43501a14130a637bc36c1ef5037aa43d69564cce09343d09918eff45d
     command:
       - "--log.level=WARN"
       - "--accesslog=true"
